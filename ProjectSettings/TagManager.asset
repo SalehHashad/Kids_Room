@@ -3,7 +3,20 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags: []
+  tags:
+  - Locomotion
+  - PassThrough
+  - PassThroughButton
+  - LocoButton
+  - LocoText
+  - SamplesInfoPanel
+  - one
+  - two
+  - TShirt
+  - rugbyball
+  - Ball
+  - Hat
+  - prop_pillow
   layers:
   - Default
   - TransparentFX

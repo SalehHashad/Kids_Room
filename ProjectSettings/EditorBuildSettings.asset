@@ -14,6 +14,9 @@ EditorBuildSettings:
   - enabled: 0
     path: "Assets/Samples/Meta XR Interaction \u200BSDK/68.0.2/Tools/HandGrabPoseTool.unity"
     guid: 8d12702353d5fd74ba260506070081fd
+  - enabled: 0
+    path: Assets/VR Core/TestingScene/Room_Unity_testing.unity
+    guid: 42a593826b6b5154c83a0235f4c4736d
   m_configObjects:
     Unity.XR.Oculus.Settings: {fileID: 11400000, guid: b385aa4c9baae3d4e8c063614feed3dd, type: 2}
     com.unity.xr.management.loader_settings: {fileID: 11400000, guid: 6afe9c1455932be47afbce0af991894d, type: 2}
