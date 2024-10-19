@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.SceneManagement;
@@ -13,6 +14,7 @@ public class LevelSnapManager : MonoBehaviour
     [SerializeField] private AudioClip PassAudioClip;
     [SerializeField] private int totalScore = 0;
     [SerializeField] private int requiredScore = 0;
+    [SerializeField] private TextMeshProUGUI ScoreTMP;
     [SerializeField] List<ModelsData> modelsData = new List<ModelsData>();
 
     public UnityEvent onLevelComplete;
@@ -21,6 +23,7 @@ public class LevelSnapManager : MonoBehaviour
     private void Start()
     {
         InitializeLevel();
+        ScoreTMP.text = totalScore.ToString();
     }
     private void InitializeLevel()
     {
@@ -50,7 +53,7 @@ public class LevelSnapManager : MonoBehaviour
             totalScore += 1;
             snapPoint.IsMatched = true;
             onScoreUpdated?.Invoke(totalScore);
-
+            UpdateScoreUI();
             Debug.Log("Your score is : " + totalScore);
             CheckLevelCompletion();
         }
@@ -81,5 +84,10 @@ public class LevelSnapManager : MonoBehaviour
         audioSource.PlayOneShot(PassAudioClip);
         yield return new WaitForSeconds(PassAudioClip.length);
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+    }
+
+    void UpdateScoreUI()
+    {
+        ScoreTMP.text = totalScore.ToString();
     }
 }

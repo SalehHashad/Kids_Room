@@ -5,7 +5,7 @@ EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Scenes:
-  - enabled: 1
+  - enabled: 0
     path: Assets/Asset_Room/Room_Unity.unity
     guid: 86ca445c70731fe42830169c0dd75dc6
   - enabled: 0
@@ -14,7 +14,7 @@ EditorBuildSettings:
   - enabled: 0
     path: "Assets/Samples/Meta XR Interaction \u200BSDK/68.0.2/Tools/HandGrabPoseTool.unity"
     guid: 8d12702353d5fd74ba260506070081fd
-  - enabled: 0
+  - enabled: 1
     path: Assets/VR Core/TestingScene/Room_Unity_testing.unity
     guid: 42a593826b6b5154c83a0235f4c4736d
   m_configObjects:
