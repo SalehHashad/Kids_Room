@@ -4,39 +4,118 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 using UnityEngine.XR.Interaction.Toolkit;
 
 public class LevelSnapManager : MonoBehaviour
 {
+    [Header("Audio Settings")]
     [SerializeField] private AudioSource audioSource;
     [SerializeField] private AudioClip successAudioClip;
     [SerializeField] private AudioClip failedAudioClip;
     [SerializeField] private AudioClip PassAudioClip;
+
+    [Header("Score Settings")]
     [SerializeField] private int totalScore = 0;
     [SerializeField] private int requiredScore = 0;
     [SerializeField] private TextMeshProUGUI ScoreTMP;
     [SerializeField] List<ModelsData> modelsData = new List<ModelsData>();
+
+    [Header("Image View Settings")]
+    [SerializeField] private Image referenceImage;
+    [SerializeField] private TextMeshProUGUI viewsRemainingText;
+    public int remainingViews;
+    private float viewDuration;
+    private bool isImageVisible = false;
+    private Coroutine hideImageCoroutine;
 
     public UnityEvent onLevelComplete;
     public UnityEvent<int> onScoreUpdated;
 
     private void Start()
     {
-        InitializeLevel();
+        InitializeLevelSettings();
         ScoreTMP.text = totalScore.ToString();
+
+        if (referenceImage != null)
+        {
+            referenceImage.gameObject.SetActive(false);
+        }
+        UpdateViewsText();
     }
-    private void InitializeLevel()
+    private void Update()
+    {
+        
+    }
+    private void InitializeLevelSettings()
     {
         int currentLevel = SceneManager.GetActiveScene().buildIndex;
-        requiredScore = currentLevel switch
+
+        switch (currentLevel)
         {
-            1 => 2,
-            2 => 30,
-            3 => 40,
-            4 => 50
+            case 1:
+                requiredScore = 2;
+                remainingViews = 4;
+                viewDuration = 10f;
+                break;
+            case 2:
+                requiredScore = 30;
+                remainingViews = 3;
+                viewDuration = 8f;
+                break;
+            case 3:
+                requiredScore = 40;
+                remainingViews = 2;
+                viewDuration = 6f;
+                break;
+            case 4:
+                requiredScore = 50;
+                remainingViews = 1;
+                viewDuration = 5f;
+                break;
+            default:
+                requiredScore = 0;
+                remainingViews = 0;
+                viewDuration = 0f;
+                break;
+        }
+    }
 
+    public void ShowReferenceImage()
+    {
+        if (remainingViews > 0 && !isImageVisible && referenceImage != null)
+        {
+            isImageVisible = true;
+            remainingViews--;
+            UpdateViewsText();
 
-        };
+            referenceImage.gameObject.SetActive(true);
+
+            if (hideImageCoroutine != null)
+            {
+                StopCoroutine(hideImageCoroutine);
+            }
+
+            hideImageCoroutine = StartCoroutine(HideImageAfterDelay());
+        }
+    }
+
+    private IEnumerator HideImageAfterDelay()
+    {
+        yield return new WaitForSeconds(viewDuration);
+        if (referenceImage != null)
+        {
+            referenceImage.gameObject.SetActive(false);
+        }
+        isImageVisible = false;
+    }
+
+    private void UpdateViewsText()
+    {
+        if (viewsRemainingText != null)
+        {
+            viewsRemainingText.text = $"Remaining Views: {remainingViews}";
+        }
     }
 
     public void HandleCorrectSnap(string objectTag)
