@@ -17,6 +17,11 @@ TagManager:
   - Ball
   - Hat
   - prop_pillow
+  - CubeSnappable
+  - SphereObject
+  - NoCubeSnapPoint
+  - SnapPoint
+  - CubeSnapPoint
   layers:
   - Default
   - TransparentFX
@@ -24,7 +29,7 @@ TagManager:
   - 
   - Water
   - UI
-  - 
+  - Floor
   - 
   - 
   - 
