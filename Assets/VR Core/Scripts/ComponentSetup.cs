@@ -7,13 +7,21 @@ using UnityEditor;
 
 public class ComponentSetup : MonoBehaviour
 {
+    [SerializeField] private LevelSnapManager levelSnapManager;
+
+    private void OnValidate()
+    {
+        if (levelSnapManager == null)
+        {
+            levelSnapManager = FindObjectOfType<LevelSnapManager>();
+        }
+    }
+
 #if UNITY_EDITOR
     private void AddTagToUnity(string tagName)
     {
         SerializedObject tagManager = new SerializedObject(AssetDatabase.LoadAllAssetsAtPath("ProjectSettings/TagManager.asset")[0]);
         SerializedProperty tagsProp = tagManager.FindProperty("tags");
-
-        // Check if tag already exists
         bool found = false;
         for (int i = 0; i < tagsProp.arraySize; i++)
         {
@@ -24,8 +32,6 @@ public class ComponentSetup : MonoBehaviour
                 break;
             }
         }
-
-        // Add new tag if it doesn't exist
         if (!found)
         {
             tagsProp.InsertArrayElementAtIndex(tagsProp.arraySize);
@@ -37,18 +43,44 @@ public class ComponentSetup : MonoBehaviour
     }
 #endif
 
+    private bool HasRequiredSetup(Transform child)
+    {
+        if (child.gameObject.tag != child.name) return false;
+        if (!child.GetComponent<Rigidbody>()) return false;
+        if (!child.GetComponent<Collider>()) return false;
+        Transform snapChild = child.Find(child.name);
+        if (!snapChild) return false;
+        if (snapChild.gameObject.tag != snapChild.name) return false;
+        CustomSnapPoint snapPoint = snapChild.GetComponent<CustomSnapPoint>();
+        if (!snapPoint) return false;
+        if (snapPoint.expectedObjectTag != child.name) return false;
+        return true;
+    }
+
     [ContextMenu("Add Components To Children")]
     private void AddComponentsToChildren()
     {
+        if (levelSnapManager == null)
+        {
+            Debug.LogError("Please assign LevelSnapManager in the inspector!");
+            return;
+        }
+        ClearModelsDataList();
+        bool componentsAdded = false;
+        
         foreach (Transform child in transform)
         {
-            // First, add the tag to Unity's tag system
+            if (HasRequiredSetup(child))
+            {
+                // Even if setup exists, add to ModelsData list in LevelSnapManager
+                AddModelData(child.name, false);
+                continue;
+            }
+            
+            componentsAdded = true;
 
-
-            // Set the tag on the child GameObject
             child.gameObject.tag = child.name;
 
-            // Add Rigidbody
             Rigidbody rb = child.gameObject.GetComponent<Rigidbody>();
             if (rb == null)
             {
@@ -57,7 +89,6 @@ public class ComponentSetup : MonoBehaviour
                 rb.isKinematic = true;
             }
 
-            // Add BoxCollider
             Collider collider = child.gameObject.GetComponent<Collider>();
             if (collider == null)
             {
@@ -65,21 +96,98 @@ public class ComponentSetup : MonoBehaviour
                 collider.isTrigger = true;
             }
 
-            // Create and setup snap child
-            GameObject snapChild = new GameObject(child.name);
-            snapChild.transform.SetParent(child);
-            snapChild.transform.localPosition = Vector3.zero;
-            snapChild.transform.localRotation = Quaternion.identity;
-            snapChild.transform.localScale = Vector3.one;
+            Transform existingSnapChild = child.Find(child.name);
+            GameObject snapChild;
+
+            if (existingSnapChild == null)
+            {
+                snapChild = new GameObject(child.name);
+                snapChild.transform.SetParent(child);
+                snapChild.transform.localPosition = Vector3.zero;
+                snapChild.transform.localRotation = Quaternion.identity;
+                snapChild.transform.localScale = Vector3.one;
+            }
+            else
+            {
+                snapChild = existingSnapChild.gameObject;
+            }
+
 #if UNITY_EDITOR
             AddTagToUnity(snapChild.name);
 #endif
             snapChild.tag = snapChild.name;
-            // Add and setup CustomSnapPoint
-            CustomSnapPoint snapPoint = snapChild.AddComponent<CustomSnapPoint>();
-            snapPoint.expectedObjectTag = child.name;
+
+            CustomSnapPoint snapPoint = snapChild.GetComponent<CustomSnapPoint>();
+            if (snapPoint == null)
+            {
+                snapPoint = snapChild.AddComponent<CustomSnapPoint>();
+                snapPoint.expectedObjectTag = child.name;
+                snapPoint.MaxSelectingInteractors = 1;
+            }
+
+            // Add to ModelsData list in LevelSnapManager
+            AddModelData(child.name, false);
         }
 
-        Debug.Log("Components and tags added to all children!");
+        if (componentsAdded)
+        {
+            Debug.Log("Components, tags, and ModelsData entries added to new children!");
+        }
+        else
+        {
+            Debug.Log("All children already have the required setup!");
+        }
+    }
+    private void ClearModelsDataList()
+    {
+        if (levelSnapManager != null)
+        {
+            SerializedObject serializedManager = new SerializedObject(levelSnapManager);
+            SerializedProperty modelsDataProp = serializedManager.FindProperty("modelsData");
+
+            modelsDataProp.ClearArray();
+            serializedManager.ApplyModifiedProperties();
+
+            Debug.Log("Cleared existing ModelsData list in LevelSnapManager.");
+        }
+    }
+    private void AddModelData(string objectTag, bool isMatched)
+    {
+        if (levelSnapManager != null)
+        {
+            SerializedObject serializedManager = new SerializedObject(levelSnapManager);
+            SerializedProperty modelsDataProp = serializedManager.FindProperty("modelsData");
+
+            modelsDataProp.InsertArrayElementAtIndex(modelsDataProp.arraySize);
+            SerializedProperty element = modelsDataProp.GetArrayElementAtIndex(modelsDataProp.arraySize - 1);
+            SerializedProperty tagProp = element.FindPropertyRelative("ObjetcTag");
+            SerializedProperty matchedProp = element.FindPropertyRelative("IsMatched");
+
+            tagProp.stringValue = objectTag;
+            matchedProp.boolValue = isMatched;
+
+            serializedManager.ApplyModifiedProperties();
+        }
+    }
+
+    [ContextMenu("Print ModelsData")]
+    private void PrintModelsData()
+    {
+        if (levelSnapManager != null)
+        {
+            SerializedObject serializedManager = new SerializedObject(levelSnapManager);
+            SerializedProperty modelsDataProp = serializedManager.FindProperty("modelsData");
+
+            Debug.Log($"Total ModelsData entries: {modelsDataProp.arraySize}");
+
+            for (int i = 0; i < modelsDataProp.arraySize; i++)
+            {
+                SerializedProperty element = modelsDataProp.GetArrayElementAtIndex(i);
+                SerializedProperty tagProp = element.FindPropertyRelative("ObjetcTag");
+                SerializedProperty matchedProp = element.FindPropertyRelative("IsMatched");
+
+                Debug.Log($"Entry {i}: Tag={tagProp.stringValue}, IsMatched={matchedProp.boolValue}");
+            }
+        }
     }
 }

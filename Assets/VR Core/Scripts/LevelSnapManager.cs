@@ -53,22 +53,22 @@ public class LevelSnapManager : MonoBehaviour
 
         switch (currentLevel)
         {
-            case 1:
-                requiredScore = 2;
+            case 0:
+                requiredScore = 12;
                 remainingViews = 4;
                 viewDuration = 10f;
                 break;
-            case 2:
+            case 1:
                 requiredScore = 30;
                 remainingViews = 3;
                 viewDuration = 8f;
                 break;
-            case 3:
+            case 2:
                 requiredScore = 40;
                 remainingViews = 2;
                 viewDuration = 6f;
                 break;
-            case 4:
+            case 3:
                 requiredScore = 50;
                 remainingViews = 1;
                 viewDuration = 5f;

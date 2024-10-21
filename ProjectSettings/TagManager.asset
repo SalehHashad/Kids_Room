@@ -22,6 +22,16 @@ TagManager:
   - NoCubeSnapPoint
   - SnapPoint
   - CubeSnapPoint
+  - PropCushion
+  - Prop_Cushion_1
+  - Bag
+  - Umberlla
+  - Umberlla_Stand
+  - Clock
+  - Cap
+  - GameObject
+  - GameObject (1)
+  - GameObject (2)
   layers:
   - Default
   - TransparentFX
