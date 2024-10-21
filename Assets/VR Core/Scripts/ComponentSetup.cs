@@ -72,7 +72,6 @@ public class ComponentSetup : MonoBehaviour
         {
             if (HasRequiredSetup(child))
             {
-                // Even if setup exists, add to ModelsData list in LevelSnapManager
                 AddModelData(child.name, false);
                 continue;
             }
@@ -124,8 +123,6 @@ public class ComponentSetup : MonoBehaviour
                 snapPoint.expectedObjectTag = child.name;
                 snapPoint.MaxSelectingInteractors = 1;
             }
-
-            // Add to ModelsData list in LevelSnapManager
             AddModelData(child.name, false);
         }
 
@@ -144,11 +141,8 @@ public class ComponentSetup : MonoBehaviour
         {
             SerializedObject serializedManager = new SerializedObject(levelSnapManager);
             SerializedProperty modelsDataProp = serializedManager.FindProperty("modelsData");
-
             modelsDataProp.ClearArray();
             serializedManager.ApplyModifiedProperties();
-
-            Debug.Log("Cleared existing ModelsData list in LevelSnapManager.");
         }
     }
     private void AddModelData(string objectTag, bool isMatched)
@@ -177,16 +171,11 @@ public class ComponentSetup : MonoBehaviour
         {
             SerializedObject serializedManager = new SerializedObject(levelSnapManager);
             SerializedProperty modelsDataProp = serializedManager.FindProperty("modelsData");
-
-            Debug.Log($"Total ModelsData entries: {modelsDataProp.arraySize}");
-
             for (int i = 0; i < modelsDataProp.arraySize; i++)
             {
                 SerializedProperty element = modelsDataProp.GetArrayElementAtIndex(i);
                 SerializedProperty tagProp = element.FindPropertyRelative("ObjetcTag");
                 SerializedProperty matchedProp = element.FindPropertyRelative("IsMatched");
-
-                Debug.Log($"Entry {i}: Tag={tagProp.stringValue}, IsMatched={matchedProp.boolValue}");
             }
         }
     }
