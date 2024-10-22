@@ -33,6 +33,7 @@ TagManager:
   - GameObject (1)
   - GameObject (2)
   - BedTableLamp
+  - BedTableLamp (1)
   layers:
   - Default
   - TransparentFX
