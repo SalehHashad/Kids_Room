@@ -1,4 +1,3 @@
-// This goes on the snap point (destination)
 using Oculus.Interaction;
 using UnityEngine;
 
@@ -7,6 +6,7 @@ public class CustomSnapPoint : SnapInteractable
     public string expectedObjectTag; // The tag of the expected object.
     [SerializeField] private LevelSnapManager levelManager; // Reference to your LevelSnapManager.
 
+    
     private void Reset()
     {
         levelManager = FindObjectOfType<LevelSnapManager>();
@@ -27,13 +27,18 @@ public class CustomSnapPoint : SnapInteractable
         else
         {
             Debug.LogError("Incorrect object snapped or object is untagged. Object tag: " + interactor.gameObject.tag);
-            InteractorRemoved(interactor);
+            //InteractorRemoved(interactor);
+            levelManager.HandleFailedAnswer();
         }
     }
 
-    protected override void InteractorRemoved(SnapInteractor interactor)
+    public void CheckIsIt(SnapInteractor interactor)
     {
-        base.InteractorRemoved(interactor);
-        levelManager.HandleFailedAnswer();
+        if(interactor.tag == "Umberlla_Stand")
+        {
+            Debug.Log(interactor.name);
+            FindObjectOfType<Umberrlla_Tag>(true).gameObject.SetActive(true);
+        }
     }
+     
 }

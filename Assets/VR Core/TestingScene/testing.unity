@@ -8878,7 +8878,6 @@ GameObject:
   m_Component:
   - component: {fileID: 767083824}
   - component: {fileID: 767083825}
-  - component: {fileID: 767083826}
   m_Layer: 0
   m_Name: SnapInteractor
   m_TagString: one
@@ -8914,8 +8913,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _activeState: {fileID: 0}
-  _interactableFilters:
-  - {fileID: 767083826}
+  _interactableFilters: []
   _candidateTiebreaker: {fileID: 0}
   _maxIterationsPerFrame: 3
   _data: {fileID: 0}
@@ -8926,21 +8924,6 @@ MonoBehaviour:
   _defaultInteractable: {fileID: 0}
   _timeOutInteractable: {fileID: 0}
   _timeOut: 0
---- !u!114 &767083826
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 767083823}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 75d3a1facc5f29d4ea65d3af68af5c9e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _requireTags:
-  - SnapPoint
-  _excludeTags: []
 --- !u!1 &770370381
 GameObject:
   m_ObjectHideFlags: 0

@@ -29,9 +29,23 @@ public class LevelSnapManager : MonoBehaviour
     private bool isImageVisible = false;
     private Coroutine hideImageCoroutine;
 
+    private ShowImage_Tag showImage;
+    private ScoreButton_Tag showScoreButton;
+
     public UnityEvent onLevelComplete;
     public UnityEvent<int> onScoreUpdated;
 
+
+    private void Awake()
+    {
+        InitializeObjects();
+    }
+
+    private void InitializeObjects()
+    {
+        showImage = FindObjectOfType<ShowImage_Tag>(true);
+        showScoreButton = FindObjectOfType<ScoreButton_Tag>(true);
+    }
     private void Start()
     {
         InitializeLevelSettings();
@@ -42,10 +56,6 @@ public class LevelSnapManager : MonoBehaviour
             referenceImage.gameObject.SetActive(false);
         }
         UpdateViewsText();
-    }
-    private void Update()
-    {
-        
     }
     private void InitializeLevelSettings()
     {
@@ -59,6 +69,7 @@ public class LevelSnapManager : MonoBehaviour
                 viewDuration = 10f;
                 break;
             case 1:
+                // here you can also add the audio intro for theis level like "This is level two you need to grab 24 object and so on ..."
                 requiredScore = 30;
                 remainingViews = 3;
                 viewDuration = 8f;
@@ -85,6 +96,8 @@ public class LevelSnapManager : MonoBehaviour
     {
         if (remainingViews > 0 && !isImageVisible && referenceImage != null)
         {
+            showImage.gameObject.SetActive(false);
+            showScoreButton.gameObject.SetActive(false);
             isImageVisible = true;
             remainingViews--;
             UpdateViewsText();
@@ -106,6 +119,8 @@ public class LevelSnapManager : MonoBehaviour
         if (referenceImage != null)
         {
             referenceImage.gameObject.SetActive(false);
+            showImage.gameObject.SetActive(true);
+            showScoreButton.gameObject.SetActive(true);
         }
         isImageVisible = false;
     }
