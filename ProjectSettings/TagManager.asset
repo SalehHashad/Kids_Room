@@ -10,8 +10,6 @@ TagManager:
   - LocoButton
   - LocoText
   - SamplesInfoPanel
-  - one
-  - two
   - TShirt
   - rugbyball
   - Ball
@@ -29,11 +27,47 @@ TagManager:
   - Umberlla_Stand
   - Clock
   - Cap
-  - GameObject
-  - GameObject (1)
-  - GameObject (2)
   - BedTableLamp
-  - BedTableLamp (1)
+  - Prop_game console
+  - Prop_dumbbell
+  - Prop_skateboard
+  - Prop_Ukulele
+  - Prop_tennis racket
+  - Prop_remote control
+  - Prop_cup
+  - Prop_doughnut
+  - Prop_eyeglasses
+  - Prop_Tissue
+  - Cushion_Coach_1
+  - Cushion_Coach
+  - TennisBall
+  - Clothe_4
+  - Trousers
+  - Trousers Blue
+  - Green_Clothe
+  - Red_Cloth
+  - Socks_Left
+  - Socks_Right
+  - rightSlipper
+  - leftSlipper
+  - rightShoe
+  - leftShoe
+  - Prop_cushion_1
+  - Prop_bag
+  - Prop_globe
+  - Prop_notebook
+  - Prop_book_Open
+  - Prop_book
+  - Prop_record player
+  - Prop_trashcan
+  - Chair_1
+  - Chair
+  - Prop_CD2
+  - Prop_CD1
+  - Prop_frame_2
+  - Prop_frame_1
+  - Open_book_full
+  - Prop_headphones
   layers:
   - Default
   - TransparentFX

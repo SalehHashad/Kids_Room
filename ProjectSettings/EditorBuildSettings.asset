@@ -5,27 +5,18 @@ EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Scenes:
-  - enabled: 0
-    path: Assets/Asset_Room/Room_Unity.unity
-    guid: 86ca445c70731fe42830169c0dd75dc6
-  - enabled: 0
-    path: "Assets/Samples/Meta XR Interaction \u200BSDK/68.0.2/Example Scenes/SnapExamples.unity"
-    guid: 01ca63189b69e00488487d660224a315
-  - enabled: 0
-    path: "Assets/Samples/Meta XR Interaction \u200BSDK/68.0.2/Tools/HandGrabPoseTool.unity"
-    guid: 8d12702353d5fd74ba260506070081fd
-  - enabled: 0
-    path: Assets/VR Core/TestingScene/Room_Unity_testing.unity
-    guid: 42a593826b6b5154c83a0235f4c4736d
-  - enabled: 0
-    path: "Assets/Samples/Meta XR Interaction \u200BSDK/68.0.2/Example Scenes/LocomotionExamples.unity"
-    guid: d37ed7e92220d1045a36bc73c7c4cf16
   - enabled: 1
     path: Assets/VR Core/TestingScene/Level_1.unity
     guid: 1b388aa759347e145b2ac687c8e553bb
-  - enabled: 0
-    path: Assets/VR Core/TestingScene/Tied_Room.unity
-    guid: b51901150e37c8e42be71e77ccc6eda7
+  - enabled: 1
+    path: Assets/VR Core/TestingScene/Level_2.unity
+    guid: d96678026756e23489304dee50c62d51
+  - enabled: 1
+    path: Assets/VR Core/TestingScene/Level_3.unity
+    guid: eb67b50504647c24c8e315caf1265399
+  - enabled: 1
+    path: Assets/VR Core/TestingScene/Level_4.unity
+    guid: ec723a70e31694247a96527c4bba3af8
   m_configObjects:
     Unity.XR.Oculus.Settings: {fileID: 11400000, guid: b385aa4c9baae3d4e8c063614feed3dd, type: 2}
     com.unity.xr.management.loader_settings: {fileID: 11400000, guid: 6afe9c1455932be47afbce0af991894d, type: 2}

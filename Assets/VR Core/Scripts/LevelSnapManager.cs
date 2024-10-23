@@ -64,23 +64,23 @@ public class LevelSnapManager : MonoBehaviour
         switch (currentLevel)
         {
             case 0:
-                requiredScore = 12;
+                requiredScore = 6;
                 remainingViews = 4;
                 viewDuration = 10f;
                 break;
             case 1:
                 // here you can also add the audio intro for theis level like "This is level two you need to grab 24 object and so on ..."
-                requiredScore = 30;
+                requiredScore = 18;
                 remainingViews = 3;
                 viewDuration = 8f;
                 break;
             case 2:
-                requiredScore = 40;
+                requiredScore = 27;
                 remainingViews = 2;
                 viewDuration = 6f;
                 break;
             case 3:
-                requiredScore = 50;
+                requiredScore = 51;
                 remainingViews = 1;
                 viewDuration = 5f;
                 break;
