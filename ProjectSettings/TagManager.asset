@@ -68,6 +68,7 @@ TagManager:
   - Prop_frame_1
   - Open_book_full
   - Prop_headphones
+  - Prop_tissue
   layers:
   - Default
   - TransparentFX

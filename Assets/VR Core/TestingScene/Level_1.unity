@@ -22511,7 +22511,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 259c553a9c9a6d24ea8494f371536e04, type: 2}
+  - {fileID: 2100000, guid: 2f79f977f8beaa54988143905f13a3f9, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -24928,6 +24928,8 @@ MonoBehaviour:
   requiredScore: 0
   ScoreTMP: {fileID: 1245299298}
   modelsData:
+  - ObjetcTag: Prop_tissue
+    IsMatched: 0
   - ObjetcTag: PropCushion
     IsMatched: 0
   - ObjetcTag: Prop_Cushion_1
